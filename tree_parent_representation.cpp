@@ -15,7 +15,7 @@ struct parentalnode tree[10]={
             {'g',3},
             {'h',3},
             {'i',4},
-            {'j',4},};
+            {'j',4}};
 
 int main(void)
 {
