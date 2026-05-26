@@ -6,53 +6,40 @@ struct node
     int data,ltag,rtag;
     node *lchild,*rchild;
 };
-node *prevn=nullptr;
+
+node *prevn=nullptr;  //global variable:pre node of current
 
 void create_tree_pre(node **root)  /*构建先序树*/
 {
     char data; cin >> data;
 
-    if(data=='#')
+    if(data=='#')  //reverse
     {
         *root=nullptr;
     }
     else
     {
-        *root=new node;
-        (*root)->data=data;
-        create_tree_pre(&((*root)->lchild));
-        create_tree_pre(&((*root)->rchild));
+        *root=new node;  //setup new node location
+        (*root)->data=data;  //access rootnode
+        create_tree_pre(&((*root)->lchild));  //left child
+        create_tree_pre(&((*root)->rchild));  //right child
     }
 }
 
-/*void threading(node **root,node *prevnn)  //先序遍历
-{
-    if((*root)==nullptr)
-    {return;}
-
-    node *prevn=prevnn;
-    if((*root)->lchild==nullptr)
-    {(*root)->ltag=1,(*root)->lchild=prevn;}
-    if((*root)->rchild==nullptr)
-    {(*root)->rtag=1,(*root)->rchild=prevn;}
-    prevn=*root;
-
-    threading(&((*root)->lchild),prevn);
-    threading(&((*root)->rchild),prevn);
-}*/
-
 void threading(node **root)  /*先序遍历,全局变量途径*/
 {
-    if(*root)
+    if(*root)  //current node is not NULL
     {
-        if(!(*root)->lchild)
-        {(*root)->ltag=1,(*root)->lchild=prevn;}
-        if(prevn!=nullptr && prevn->rchild==nullptr)
-        {prevn->rtag=1,prevn->rchild=*root;}
-        prevn=*root;
+        if(!(*root)->lchild)  //current do not have left child
+        {(*root)->ltag=1,(*root)->lchild=prevn;}  //tag set 1,left child point to predecessor(parent)
+        if(prevn!=nullptr && prevn->rchild==nullptr)  //current do not have right child
+        {prevn->rtag=1,prevn->rchild=*root;}  //tag set 1,right child point to successor(child)
+        prevn=*root;  //update predecessor
 
-        if ((*root)->ltag == 0) threading(&((*root)->lchild));
-        if ((*root)->rtag == 0)threading(&((*root)->rchild));
+        if ((*root)->ltag == 0)  //left tag is 0,have left child,can traverse
+        {threading(&((*root)->lchild));}  //traverse left tree
+        if ((*root)->rtag == 0)  //right tag is 0,have right child,can traverse
+        {threading(&((*root)->rchild));}  //traverse right tree
     }
 }
 
