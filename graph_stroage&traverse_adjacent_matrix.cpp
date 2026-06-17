@@ -50,6 +50,7 @@ int main(void)
     {
         int head_index,tail_index; cin >> head_index >> tail_index;  /*zero-based index*/
         arcs[head_index][tail_index]=1;
+        //arcs[tail_index][head_index]=1;  //used for undirected graph
     }
 
     BFS(arcs,0); cout << endl;
