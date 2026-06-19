@@ -17,12 +17,12 @@ vector<bool> access_lable;
 
 void BFS(vector<vertex>& vertexs,int start)
 {
-
+    
 }
 
 void DFS(vector<vertex>& vertexs,int start)
 {
-
+    
 }
 
 int main(void)
@@ -50,6 +50,9 @@ int main(void)
         }
     }
 
+    BFS(vertexs,0); cout << endl;
+    for(size_t i=0;i<size(access_lable);i++){access_lable[i]=false;}
+    DFS(vertexs,0); cout << endl;
 
     return 0;
 }
