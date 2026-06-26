@@ -41,7 +41,6 @@ void inorder(size_t root_index)
     if(root_index==0) {return;}
     inorder(huffmantree[root_index-1].leftc);
     cout << huffmantree[root_index-1].weight << ' ';
-    huffmantree[huffmantree[root_index-1].leftc].lable=1,huffmantree[huffmantree[root_index-1].rightc].lable=0;
     inorder(huffmantree[root_index-1].rightc);
 }
 

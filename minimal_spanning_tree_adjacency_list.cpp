@@ -56,18 +56,12 @@ int main(void)
     for(int i=0;i<num_edge;i++)
     {
         int tail,head,weight; cin >> tail >> head >> weight;
+        edge *newedge=new edge;
+        newedge->index=head; newedge->weight=weight; newedge->next=nullptr; 
         if(vertexs[tail].firstedge==nullptr)
-        {
-            edge *newedge=new edge;
-            newedge->index=head; newedge->weight=weight; newedge->next=nullptr; 
-            vertexs[tail].firstedge=newedge; vertexs[tail].end=newedge;
-        }
+        {vertexs[tail].firstedge=newedge; vertexs[tail].end=newedge;}
         else
-        {
-            edge *newedge=new edge;
-            newedge->index=head; newedge->weight=weight; newedge->next=nullptr;
-            vertexs[tail].end->next=newedge; vertexs[tail].end=vertexs[tail].end->next;
-        }
+        {vertexs[tail].end->next=newedge; vertexs[tail].end=vertexs[tail].end->next;}
     }
 
     prim(vertexs,0);
