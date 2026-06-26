@@ -59,23 +59,16 @@ int main(void)
     vector<vertex> vertexs(num_vertex);
 
     for(int i=0;i<num_vertex;i++)
-    {
-        cin >> vertexs[i].data; vertexs[i].firstedge=nullptr; access_lable.push_back(false);
-    }
+    {cin >> vertexs[i].data; vertexs[i].firstedge=nullptr; access_lable.push_back(false);}
     for(int i=0;i<num_edge;i++)
     {
         int index_tail,index_head; cin >> index_tail >> index_head;
 
+        edge *node=new edge; node->index=index_head; node->next=nullptr;
         if(vertexs[index_tail].firstedge==nullptr)
-        {
-            edge *node=new edge; node->index=index_head; node->next=nullptr;
-            vertexs[index_tail].firstedge=node; vertexs[index_tail].end=node;
-        }
+        {vertexs[index_tail].firstedge=node; vertexs[index_tail].end=node;}
         else
-        {
-            edge *node=new edge; node->index=index_head; node->next=nullptr;
-            vertexs[index_tail].end->next=node; vertexs[index_tail].end=vertexs[index_tail].end->next;
-        }
+        {vertexs[index_tail].end->next=node; vertexs[index_tail].end=vertexs[index_tail].end->next;}
     }
 
     BFS(vertexs,0); cout << endl;
