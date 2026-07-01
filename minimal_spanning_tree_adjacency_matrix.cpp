@@ -14,6 +14,62 @@ struct kruskaledge
 };
 vector<kruskaledge> weightsort;
 
+void prim_lowcost(int start) 
+{
+    // 1. 初始化 lowcost 数组，初值为起点到各点的边权
+    // 用一个局部 vector 即可，大小为 num_vertex
+    vector<int> lowcost(num_vertex);
+    for(int i = 0; i < num_vertex; i++)
+    {
+        lowcost[i] = edges[start][i];
+    }
+
+    // 2. 初始化 parent 数组，用于记录树的边（替代你原来的 accessed_edge 查表）
+    vector<int> parent(num_vertex, start); 
+
+    // 起点加入生成树
+    accessed_vertex[start] = true;
+    lowcost[start] = 0; // 约定：lowcost 为 0 代表该点已加入生成树
+
+    // 只需要循环 num_vertex - 1 次，找剩下的未知节点
+    for(int count = 1; count < num_vertex; count++)
+    {
+        int minweight = INT_MAX;
+        int next_vertex = -1;
+
+        // 【循环 1】：找出当前未访问节点中，离树集合最近的点 (对应复杂度 O(V))
+        for(int j = 0; j < num_vertex; j++)
+        {
+            if(accessed_vertex[j] == false && lowcost[j] < minweight)
+            {
+                minweight = lowcost[j];
+                next_vertex = j;
+            }
+        }
+
+        // 如果找不到有效边，说明图不连通
+        if(next_vertex == -1) { return; }
+
+        // 将选中的最短边记录到你的 accessed_edge 矩阵中（为了兼容你 main 函数的输出）
+        int row = parent[next_vertex],col = next_vertex;
+        accessed_edge[row][col] = accessed_edge[col][row] = true;
+
+        // 将新节点标记为已访问，并将其移出待选集合
+        accessed_vertex[next_vertex] = true;
+        lowcost[next_vertex] = 0; 
+
+        // 【循环 2】：因为新加入了 next_vertex，更新其他未访问点到树集合的最短距离 (对应复杂度 O(V))
+        for(int j = 0; j < num_vertex; j++)
+        {
+            if(accessed_vertex[j] == false && edges[next_vertex][j] < lowcost[j])
+            {
+                lowcost[j] = edges[next_vertex][j];
+                parent[j] = next_vertex; // 刷新 j 的“归属”，它是被 next_vertex 拉进来的
+            }
+        }
+    }
+}
+
 void prim(int start) //row-based
 {
     accessed_vertex[start]=true;
