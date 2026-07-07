@@ -3,7 +3,7 @@ using namespace std;
 
 int num_element;
 vector<int> heap;
-
+priority_queue<int> pri_que;
 void sift_up(int index)
 {
 
@@ -52,7 +52,11 @@ void heap_sort()
 int main(void)
 {
     cin >>num_element; heap.resize(num_element);
-    for(int &input:heap) {cin >> input;}
+    for(int i=0;i<num_element;i++)
+    {int input;cin >> input; heap[i]=input,pri_que.push(input);}
+    
+    for(int i=0;i<num_element;i++)
+    {cout << pri_que.top() << ' '; pri_que.pop();} cout << endl;
 
     generate_heap();
     heap_sort(); cout << endl;
